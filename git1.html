@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Hello world</h1>
     <h1>ayaka 1</h1>
     <p>change on master</p>
-    <p>change on ayaka2</p>
-</body>
+
+    <script>
+      // 'graphql-request' or other GraphQL library is required
+      const { request, GraphQLClient } = require('graphql-request');
+      const ENDPOINT = `{https://api.8base.com/ck76jrfm3000208mhcsw38cpx}`;
+
+      const MAKE_TODO = `
+  mutation TodoCreate {
+    todoCreate(
+      data: {
+        text: "from node",
+        completed: false
+    }) {
+      id
+      text
+      completed
+    }
+  }
+`;
+
+      // create a new instance of GraphQLClient in order to add an authorization header
+      const client = new GraphQLClient(ENDPOINT, {
+        headers: {
+          Authorization: 'aya {f8e725e6-0b40-4488-9d7a-16aa45a2b894}'
+        }
+      });
+
+      // update the request function so it runs in the context of client
+      client.request(MAKE_TODO).then(r => console.log(r));
+    </script>
+  </body>
 </html>
